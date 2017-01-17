@@ -8,8 +8,13 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { Router } from "react-router";
 import History from "./History";
+import R from "ramda"; //eslint-disable-line id-length
 
-const store = createStore(contentDiscoveryApp, applyMiddleware(thunkMiddleware));
+const store = createStore(contentDiscoveryApp,
+    R.compose(
+        applyMiddleware(thunkMiddleware),
+        window.devToolsExtension ? window.devToolsExtension() : func => func)
+);
 
 ReactDOM.render(
   <Provider store={store}>
